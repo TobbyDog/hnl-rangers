@@ -39,30 +39,66 @@
     background: linear-gradient(180deg, rgba(0,20,80,0.98) 0%, rgba(5,9,26,0.95) 100%);
     border-bottom: 3px solid var(--red);
     padding: 0 2rem;
-    display: flex; align-items: center; gap: 1.5rem;
-    height: 90px; position: sticky; top: 0; z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 90px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     box-shadow: 0 4px 40px rgba(0,0,0,0.7);
   }
   .header-logo {
-    width: 64px; height: 64px; flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
     background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat;
   }
   .header-title { flex: 1; }
-  .header-title h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; letter-spacing: 3px; line-height: 1; text-shadow: 0 0 30px rgba(0,56,168,0.8); }
-  .header-title p { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 4px; color: var(--red); text-transform: uppercase; }
-  .header-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 2px; padding: 6px 14px; border: 1px solid var(--gold); color: var(--gold); text-transform: uppercase; }
+  .header-title h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.6rem;
+    letter-spacing: 3px;
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(0,56,168,0.8);
+  }
+  .header-title p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+  }
+  .header-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-transform: uppercase;
+  }
 
   nav {
     background: rgba(0,20,80,0.92);
     border-bottom: 1px solid rgba(0,56,168,0.4);
-    display: flex; justify-content: center; flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
     backdrop-filter: blur(8px);
   }
   nav button {
-    background: none; border: none; color: rgba(255,255,255,0.65);
-    font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase;
-    padding: 16px 28px; cursor: pointer; transition: all 0.25s;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.65);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 16px 28px;
+    cursor: pointer;
+    transition: all 0.25s;
     border-bottom: 3px solid transparent;
   }
   nav button:hover { color: var(--white); background: rgba(0,56,168,0.2); }
@@ -71,30 +107,385 @@
   main { max-width: 1300px; margin: 0 auto; padding: 2.5rem 1.5rem; }
   .tab-content { display: none; }
   .tab-content.active { display: block; animation: fadeUp 0.4s ease; }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(18px); }
+    to { opacity:1; transform:translateY(0); }
+  }
 
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; letter-spacing: 4px; margin-bottom: 0.3rem; }
-  .section-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
-  .edit-hint { background: rgba(200,168,75,0.1); border: 1px dashed var(--gold); border-radius: 4px; padding: 0.8rem 1.2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 1px; margin-bottom: 1.5rem; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.4rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.3rem;
+  }
+  .section-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .edit-hint {
+    background: rgba(200,168,75,0.1);
+    border: 1px dashed var(--gold);
+    border-radius: 4px;
+    padding: 0.8rem 1.2rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+  }
 
-  .scores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1rem; margin-top: 1.5rem; }
-  .score-card { background: linear-gradient(135deg, rgba(0,56,168,0.15), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.4); border-left: 4px solid var(--blue); border-radius: 4px; padding: 1.2rem 1.4rem; transition: transform 0.2s; }
+  .scores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px,1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .score-card {
+    background: linear-gradient(135deg, rgba(0,56,168,0.15), rgba(5,9,26,0.95));
+    border: 1px solid rgba(0,56,168,0.4);
+    border-left: 4px solid var(--blue);
+    border-radius: 4px;
+    padding: 1.2rem 1.4rem;
+    transition: transform 0.2s;
+  }
   .score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,56,168,0.3); }
   .score-card.win { border-left-color: #22c55e; }
   .score-card.loss { border-left-color: var(--red); }
   .score-card.otl { border-left-color: var(--gold); }
-  .score-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
-  .score-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-  .score-result { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 2px; padding: 2px 10px; border-radius: 2px; }
+  .score-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.7rem;
+  }
+  .score-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .score-result {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    padding: 2px 10px;
+    border-radius: 2px;
+  }
   .score-result.win { background: rgba(34,197,94,0.2); color: #22c55e; }
   .score-result.loss { background: rgba(206,17,38,0.2); color: var(--red); }
   .score-result.otl { background: rgba(200,168,75,0.2); color: var(--gold); }
-  .score-matchup { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-  .score-team { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); flex: 1; }
-  .score-numbers { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 2px; text-align: center; line-height: 1; }
-  .score-vs { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.35); text-align: center; }
+  .score-matchup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .score-team {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .score-numbers {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1;
+  }
+  .score-vs {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+  }
 
-  .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+  .news-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+  }
+  .news-card {
+    background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95));
+    border: 1px solid rgba(0,56,168,0.35);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .news-card:hover { transform: translateY(-2px); }
+  .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
+  .news-image {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    display: block;
+    border-bottom: 1px solid rgba(0,56,168,0.25);
+  }
+  .news-body { padding: 1.4rem; }
+  .news-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.5rem;
+  }
+  .news-headline {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+    line-height: 1.3;
+  }
+  .news-content {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .news-date {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    margin-top: 1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .trade-entry {
+    background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95));
+    border: 1px solid rgba(0,56,168,0.35);
+    border-radius: 4px;
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+  .trade-side h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .trade-side.received h4 { color: #22c55e; }
+  .trade-side.sent h4 { color: var(--red); }
+  .trade-side p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .trade-arrow {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    text-align: center;
+  }
+  .trade-footer {
+    grid-column: 1/-1;
+    border-top: 1px solid rgba(0,56,168,0.2);
+    padding-top: 0.7rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .roster-table-wrap { overflow-x: auto; margin-top: 1rem; }
+  table { width: 100%; border-collapse: collapse; font-family: 'Barlow Condensed', sans-serif; }
+  thead tr { background: linear-gradient(90deg, var(--blue), rgba(0,56,168,0.6)); }
+  thead th {
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  thead th:first-child { text-align: left; }
+  tbody tr { border-bottom: 1px solid rgba(0,56,168,0.15); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(0,56,168,0.15); }
+  tbody td {
+    padding: 12px 14px;
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+  tbody td:first-child { text-align: left; font-weight: 600; color: var(--white); }
+  .player-name-cell { display: flex; align-items: center; gap: 0.7rem; }
+  .player-role {
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .role-c { background: rgba(200,168,75,0.25); color: var(--gold); border: 1px solid var(--gold); }
+  .role-a { background: rgba(0,56,168,0.3); color: #6fa3ff; border: 1px solid #4d7fd4; }
+  .role-gk { background: rgba(206,17,38,0.25); color: #ff7a8a; border: 1px solid var(--red); }
+  .stat-pos { color: #22c55e; }
+  .stat-neg { color: var(--red); }
+
+  .lineup-section { margin-bottom: 2.5rem; }
+  .lineup-section h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+    color: #6fa3ff;
+    border-left: 4px solid var(--red);
+    padding-left: 12px;
+    margin-bottom: 1rem;
+  }
+  .line-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .line-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    width: 60px;
+    flex-shrink: 0;
+  }
+  .line-player {
+    background: linear-gradient(135deg, rgba(0,56,168,0.2), rgba(5,9,26,0.8));
+    border: 1px solid rgba(0,56,168,0.4);
+    border-radius: 3px;
+    padding: 10px 18px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    min-width: 150px;
+    text-align: center;
+    flex: 1;
+    transition: border-color 0.2s;
+  }
+  .line-player:hover { border-color: var(--blue); }
+  .line-player small {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .record-banner {
+    background: linear-gradient(90deg, rgba(0,56,168,0.25), rgba(206,17,38,0.15));
+    border: 1px solid rgba(0,56,168,0.4);
+    border-radius: 4px;
+    padding: 1.2rem 2rem;
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .record-stat { text-align: center; }
+  .record-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; }
+  .record-stat .lbl {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+  }
+  .record-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
+
+  .hero { text-align: center; padding: 3rem 1rem 2rem; }
+  .hero-logo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 20px rgba(0,56,168,0.6)); }
+    50% { filter: drop-shadow(0 0 40px rgba(0,56,168,1)) drop-shadow(0 0 60px rgba(206,17,38,0.4)); }
+  }
+  .hero h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 6px;
+    text-shadow: 0 0 40px rgba(0,56,168,0.8);
+    margin-bottom: 0.5rem;
+  }
+  .hero p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 5px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .home-quick {
+    background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95));
+    border: 1px solid rgba(0,56,168,0.35);
+    border-radius: 4px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .home-quick:hover {
+    border-color: var(--blue);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0,56,168,0.3);
+  }
+  .home-quick .icon { font-size: 2rem; margin-bottom: 0.7rem; }
+  .home-quick h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+  }
+  .home-quick p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+  .card {
+    background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95));
+    border: 1px solid rgba(0,56,168,0.35);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+  footer {
+    border-top: 1px solid rgba(0,56,168,0.3);
+    padding: 1.5rem 2rem;
+    text-align: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    margin-top: 3rem;
+  }
+  .empty-msg {
+    color: rgba(255,255,255,0.4);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 2px;
+    padding: 2rem 0;
+  }
+
   @media (max-width: 768px) {
     .news-grid { grid-template-columns: 1fr; }
     nav button { padding: 12px 16px; font-size: 0.8rem; }
@@ -103,72 +494,6 @@
     .record-banner { gap: 1rem; justify-content: center; }
     .record-divider { display: none; }
   }
-  .news-card { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; overflow: hidden; transition: transform 0.2s; }
-  .news-card:hover { transform: translateY(-2px); }
-  .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
-  .news-body { padding: 1.4rem; }
-  .news-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
-  .news-headline { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.3; }
-  .news-content { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
-  .news-date { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 1rem; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
-
-  .trade-entry { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.4rem; margin-bottom: 1rem; display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
-  .trade-side h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .trade-side.received h4 { color: #22c55e; }
-  .trade-side.sent h4 { color: var(--red); }
-  .trade-side p { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; font-weight: 600; line-height: 1.5; }
-  .trade-arrow { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); text-align: center; }
-  .trade-footer { grid-column: 1/-1; border-top: 1px solid rgba(0,56,168,0.2); padding-top: 0.7rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
-
-  .roster-table-wrap { overflow-x: auto; margin-top: 1rem; }
-  table { width: 100%; border-collapse: collapse; font-family: 'Barlow Condensed', sans-serif; }
-  thead tr { background: linear-gradient(90deg, var(--blue), rgba(0,56,168,0.6)); }
-  thead th { padding: 12px 14px; text-align: center; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.8); font-weight: 600; white-space: nowrap; }
-  thead th:first-child { text-align: left; }
-  tbody tr { border-bottom: 1px solid rgba(0,56,168,0.15); transition: background 0.15s; }
-  tbody tr:hover { background: rgba(0,56,168,0.15); }
-  tbody td { padding: 12px 14px; text-align: center; font-size: 0.95rem; color: var(--text); }
-  tbody td:first-child { text-align: left; font-weight: 600; color: var(--white); }
-  .player-name-cell { display: flex; align-items: center; gap: 0.7rem; }
-  .player-role { font-size: 0.6rem; letter-spacing: 1px; padding: 2px 6px; border-radius: 2px; font-weight: 700; text-transform: uppercase; }
-  .role-c { background: rgba(200,168,75,0.25); color: var(--gold); border: 1px solid var(--gold); }
-  .role-a { background: rgba(0,56,168,0.3); color: #6fa3ff; border: 1px solid #4d7fd4; }
-  .role-gk { background: rgba(206,17,38,0.25); color: #ff7a8a; border: 1px solid var(--red); }
-  .stat-pos { color: #22c55e; }
-  .stat-neg { color: var(--red); }
-
-  .lineup-section { margin-bottom: 2.5rem; }
-  .lineup-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 3px; color: #6fa3ff; border-left: 4px solid var(--red); padding-left: 12px; margin-bottom: 1rem; }
-  .line-row { display: flex; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; align-items: center; }
-  .line-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); width: 60px; flex-shrink: 0; }
-  .line-player { background: linear-gradient(135deg, rgba(0,56,168,0.2), rgba(5,9,26,0.8)); border: 1px solid rgba(0,56,168,0.4); border-radius: 3px; padding: 10px 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; min-width: 150px; text-align: center; flex: 1; transition: border-color 0.2s; }
-  .line-player:hover { border-color: var(--blue); }
-  .line-player small { display: block; font-size: 0.65rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-top: 2px; }
-
-  .record-banner { background: linear-gradient(90deg, rgba(0,56,168,0.25), rgba(206,17,38,0.15)); border: 1px solid rgba(0,56,168,0.4); border-radius: 4px; padding: 1.2rem 2rem; display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem; }
-  .record-stat { text-align: center; }
-  .record-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; }
-  .record-stat .lbl { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 3px; color: rgba(255,255,255,0.45); text-transform: uppercase; }
-  .record-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
-
-  .hero { text-align: center; padding: 3rem 1rem 2rem; }
-  .hero-logo { width: 120px; height: 120px; margin: 0 auto 1.5rem; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat; animation: pulse 3s ease-in-out infinite; }
-  @keyframes pulse {
-    0%,100% { filter: drop-shadow(0 0 20px rgba(0,56,168,0.6)); }
-    50% { filter: drop-shadow(0 0 40px rgba(0,56,168,1)) drop-shadow(0 0 60px rgba(206,17,38,0.4)); }
-  }
-  .hero h2 { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 6px; text-shadow: 0 0 40px rgba(0,56,168,0.8); margin-bottom: 0.5rem; }
-  .hero p { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 5px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
-  .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-top: 2rem; }
-  .home-quick { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.5rem; cursor: pointer; transition: all 0.2s; }
-  .home-quick:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,56,168,0.3); }
-  .home-quick .icon { font-size: 2rem; margin-bottom: 0.7rem; }
-  .home-quick h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 0.4rem; }
-  .home-quick p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
-
-  .card { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.5rem; }
-  footer { border-top: 1px solid rgba(0,56,168,0.3); padding: 1.5rem 2rem; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); text-transform: uppercase; margin-top: 3rem; }
-  .empty-msg { color: rgba(255,255,255,0.4); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2px; padding: 2rem 0; }
 </style>
 </head>
 <body>
@@ -290,16 +615,16 @@
 // SCORES  –  result: "W" = Win | "L" = Loss | "OTL" = OT Loss
 // ─────────────────────────────────────────────────────────────
 const SCORES = [
-  { date: "Apr 1, 2026", opponent: "Ottawa Senators",      nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Home", notes: "" },
-  { date: "Apr 1, 2026", opponent: "Nashville Predators",  nyrScore: 0, oppScore: 5, result: "L", type: "Regular", location: "Road", notes: "" },
-  { date: "Apr 2, 2026", opponent: "Edmonton Oilers",      nyrScore: 4, oppScore: 5, result: "L", type: "Regular", location: "Home", notes: "" },
-  { date: "Apr 2, 2026", opponent: "Los Angeles Kings",    nyrScore: 2, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
-  { date: "Apr 3, 2026", opponent: "Carolina Hurricanes",  nyrScore: 5, oppScore: 1, result: "W", type: "Regular", location: "Road", notes: "" },
-  { date: "Apr 3, 2026", opponent: "Edmonton Oilers",      nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
-  { date: "Apr 4, 2026", opponent: "Washington Capitals",  nyrScore: 11, oppScore: 2, result: "W", type: "Regular", location: "Home", notes: "" },
-  { date: "Apr 4, 2026", opponent: "Montreal Canadiens",   nyrScore: 1, oppScore: 2, result: "L", type: "Regular", location: "Road", notes: "" },
-  { date: "Apr 4, 2026", opponent: "Washington Capitals",  nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
-  { date: "Apr 4, 2026", opponent: "Pittsburgh Penguins",  nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 1, 2026", opponent: "Ottawa Senators",     nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 1, 2026", opponent: "Nashville Predators", nyrScore: 0, oppScore: 5, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 2, 2026", opponent: "Edmonton Oilers",     nyrScore: 4, oppScore: 5, result: "L", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 2, 2026", opponent: "Los Angeles Kings",   nyrScore: 2, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 3, 2026", opponent: "Carolina Hurricanes", nyrScore: 5, oppScore: 1, result: "W", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 3, 2026", opponent: "Edmonton Oilers",     nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Washington Capitals", nyrScore: 11, oppScore: 2, result: "W", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Montreal Canadiens",  nyrScore: 1, oppScore: 2, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Washington Capitals", nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Pittsburgh Penguins", nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -307,8 +632,8 @@ const SCORES = [
 // ─────────────────────────────────────────────────────────────
 const ROSTER = {
   skaters: [
-    { name: "Dupuisov",        role: "C",  gp:7,  cap:0,  toi:60, shots:37, g:15, a:2,  p:17, pm:18,  hits:20, pks:6,  blk:8  },
-    { name: "jgcars1",         role: "A",  gp:4,  cap:7,  toi:24, shots:4,  g:0,  a:2,  p:2,  pm:-1,  hits:22, pks:4,  blk:18 },
+    { name: "jgcars1",         role: "C",  gp:4,  cap:7,  toi:24, shots:4,  g:0,  a:2,  p:2,  pm:-1,  hits:22, pks:4,  blk:18 },
+    { name: "Dupuisov",        role: "A",  gp:7,  cap:0,  toi:60, shots:37, g:15, a:2,  p:17, pm:18,  hits:20, pks:6,  blk:8  },
     { name: "305tobbydog",     role: "A",  gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
     { name: "afantastos",      role: "",   gp:10, cap:4,  toi:73, shots:13, g:2,  a:6,  p:8,  pm:1,   hits:40, pks:6,  blk:23 },
     { name: "ydk_me34",        role: "",   gp:9,  cap:1,  toi:44, shots:7,  g:1,  a:4,  p:5,  pm:11,  hits:16, pks:1,  blk:12 },
@@ -322,6 +647,7 @@ const ROSTER = {
     { name: "greenly0728",     role: "",   gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
     { name: "w45rtert4r",      role: "",   gp:10, cap:0,  toi:48, shots:14, g:4,  a:0,  p:4,  pm:0,   hits:21, pks:7,  blk:10 },
     { name: "HockeyNFootball", role: "",   gp:5,  cap:0,  toi:20, shots:14, g:2,  a:2,  p:4,  pm:4,   hits:14, pks:1,  blk:5  },
+    { name: "mozzachees",      role: "",   gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
   ],
   goalies: [
     { name: "305tobbydog", role: "GK1", gp:3, toi:32, saves:40, sa:43, ga:3,  gaa:"1.41", svp:".930", so:0 },
@@ -338,23 +664,23 @@ const LINEUPS = [
   {
     name: "Forward Lines",
     lines: [
-      { label: "Line 1", players: [{ name:"ryanrulezzz", pos:"LW" }, { name:"Dupuisov", pos:"C" }, { name:"HockeyNFootball", pos:"RW" }] },
-      { label: "Line 2", players: [{ name:"aramdaboss", pos:"LW" }, { name:"w45rtert4r", pos:"C" }, { name:"Weatherplzza", pos:"RW" }] },
-      { label: "Line 3", players: [{ name:"ceab7712", pos:"LW" }, { name:"Elite6321", pos:"C" }, { name:"cooljoe2443", pos:"RW" }] },
+      { label: "Line 1", players: [{ name:"Dupuisov", pos:"LW" }, { name:"aramdaboss", pos:"C" }, { name:"ryanrulezzz", pos:"RW" }] },
+      { label: "Line 2", players: [{ name:"afantastos", pos:"LW" }, { name:"w45rtert4r", pos:"C" }, { name:"HockeyNFootball", pos:"RW" }] },
+      { label: "Line 3", players: [{ name:"ydk_me34", pos:"LW" }, { name:"Elite6321", pos:"C" }, { name:"cooljoe2443", pos:"RW" }] },
     ]
   },
   {
     name: "Defense Pairs",
     lines: [
-      { label: "Pair 1", players: [{ name:"jgcars1", pos:"LD" }, { name:"afantastos", pos:"RD" }] },
-      { label: "Pair 2", players: [{ name:"ydk_me34", pos:"LD" }, { name:"tsall100", pos:"RD" }] },
+      { label: "Pair 1", players: [{ name:"jgcars1", pos:"LD" }, { name:"ceab7712", pos:"RD" }] },
+      { label: "Pair 2", players: [{ name:"Weatherplzza", pos:"LD" }, { name:"tsall100", pos:"RD" }] },
     ]
   },
   {
     name: "Goaltending",
     lines: [
       { label: "Starter", players: [{ name:"305tobbydog", pos:"GK" }] },
-      { label: "Backup",  players: [{ name:"Weatherplzza", pos:"GK" }] },
+      { label: "Backup",  players: [{ name:"ryanrulezzz", pos:"GK" }] },
     ]
   }
 ];
@@ -367,11 +693,7 @@ const TRADES = [
     date: "S45 Pre-Season",
     with: "Carolina Hurricanes",
     received: ["305tobbydog (GK)"],
-    sent: [
-      "22janjar",
-      "Sixsevenalss_Altt",
-      "OpGamerTY20"
-    ],
+    sent: ["22janjar", "Sixsevenalss_Altt", "OpGamerTY20"],
     notes: "Blockbuster trade: NYR acquires 305tobbydog; Carolina receives three players"
   },
   {
@@ -385,16 +707,23 @@ const TRADES = [
 
 // ─────────────────────────────────────────────────────────────
 // NEWS  –  First entry = Featured. Add NEW posts at the TOP.
-// tag: "📰 Update" | "🏒 Game" | "🔄 Trade" | "🏆 Milestone" | "📋 Roster"
 // ─────────────────────────────────────────────────────────────
 const NEWS = [
   {
     date: "April 5, 2026",
     author: "NYR Front Office",
+    tag: "🏆 Milestone",
+    headline: "Captaincy Change — jgcars1 Named New Captain",
+    image: "jgcars1.webp",
+    content: "In a major leadership move, Dupuisov has officially handed over the captaincy to jgcars1. After leading the team early in the season, Dupuisov will now serve as an Alternate Captain. jgcars1 steps into the captain role as the Rangers continue their Season 45 campaign."
+  },
+  {
+    date: "April 1, 2026",
+    author: "NYR Front Office",
     tag: "📋 Roster",
     headline: "Season 45 Roster Finalized — Rangers Ready for Battle",
-    content: "The New York Rangers have locked in their HNL Season 45 roster. 305tobbydog takes over as GK1 and Alternate Captain alongside jgcars1, while captain Dupuisov leads the charge up front. afantastos, w45rtert4r, and ryanrulezzz provide offensive depth. 22janjar, Sixsevenalss_Altt, and OpGamerTY20 have been dealt in a roster overhaul. Let's go Rangers!"
-  },
+    content: "The New York Rangers officially opened Season 45 with their finalized roster. Dupuisov originally led the team as captain, supported by alternates jgcars1 and 305tobbydog. With strong depth across the lineup, the Rangers entered the season ready to compete in HNL."
+  }
 ];
 
 // ╔══════════════════════════════════════════════════════════════╗
@@ -531,19 +860,28 @@ function renderNews() {
 
   con.innerHTML = `
     <div>
-      <div class="news-card"><div class="news-banner"></div><div class="news-body">
-        <div class="news-tag">📌 Featured</div>
-        <div class="news-headline">${main.headline}</div>
-        <div class="news-content">${main.content}</div>
-        <div class="news-date">${main.date} · by ${main.author}</div>
-      </div></div>
+      <div class="news-card">
+        <div class="news-banner"></div>
+        ${main.image ? `<img src="${main.image}" alt="${main.headline}" class="news-image">` : ''}
+        <div class="news-body">
+          <div class="news-tag">📌 Featured</div>
+          <div class="news-headline">${main.headline}</div>
+          <div class="news-content">${main.content}</div>
+          <div class="news-date">${main.date} · by ${main.author}</div>
+        </div>
+      </div>
+
       ${rest.map(n => `
-        <div class="news-card" style="margin-top:1rem"><div class="news-banner"></div><div class="news-body">
-          <div class="news-tag">${n.tag || '📰 Update'}</div>
-          <div class="news-headline">${n.headline}</div>
-          <div class="news-content">${n.content}</div>
-          <div class="news-date">${n.date} · by ${n.author}</div>
-        </div></div>
+        <div class="news-card" style="margin-top:1rem">
+          <div class="news-banner"></div>
+          ${n.image ? `<img src="${n.image}" alt="${n.headline}" class="news-image">` : ''}
+          <div class="news-body">
+            <div class="news-tag">${n.tag || '📰 Update'}</div>
+            <div class="news-headline">${n.headline}</div>
+            <div class="news-content">${n.content}</div>
+            <div class="news-date">${n.date} · by ${n.author}</div>
+          </div>
+        </div>
       `).join('')}
     </div>
     <div>
