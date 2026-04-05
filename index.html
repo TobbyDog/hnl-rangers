@@ -220,13 +220,15 @@
   }
   .news-card:hover { transform: translateY(-2px); }
   .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
-  .news-image {
-    width: 100%;
-    max-height: 420px;
-    object-fit: cover;
-    display: block;
-    border-bottom: 1px solid rgba(0,56,168,0.25);
-  }
+ .news-image {
+  width: 100%;
+  height: 420px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  background: rgba(5,9,26,0.95);
+  border-bottom: 1px solid rgba(0,56,168,0.25);
+}
   .news-body { padding: 1.4rem; }
   .news-tag {
     font-family: 'Barlow Condensed', sans-serif;
