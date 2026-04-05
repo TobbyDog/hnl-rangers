@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNL S45 – New York Rangers</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0038A8;
+    --red: #CE1126;
+    --white: #FFFFFF;
+    --dark: #05091a;
+    --text: #d0d8f0;
+    --gold: #c8a84b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, rgba(0,56,168,0.45) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 90% 80%, rgba(206,17,38,0.18) 0%, transparent 60%),
+      repeating-linear-gradient(135deg, transparent 0px, transparent 38px, rgba(255,255,255,0.013) 38px, rgba(255,255,255,0.013) 39px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body > * { position: relative; z-index: 1; }
+
+  header {
+    background: linear-gradient(180deg, rgba(0,20,80,0.98) 0%, rgba(5,9,26,0.95) 100%);
+    border-bottom: 3px solid var(--red);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    height: 90px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.7);
+  }
+  .header-logo {
+    width: 64px; height: 64px; flex-shrink: 0;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat;
+  }
+  .header-title { flex: 1; }
+  .header-title h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.6rem; letter-spacing: 3px; line-height: 1; text-shadow: 0 0 30px rgba(0,56,168,0.8); }
+  .header-title p { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 4px; color: var(--red); text-transform: uppercase; }
+  .header-badge { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 2px; padding: 6px 14px; border: 1px solid var(--gold); color: var(--gold); text-transform: uppercase; }
+
+  nav {
+    background: rgba(0,20,80,0.92);
+    border-bottom: 1px solid rgba(0,56,168,0.4);
+    display: flex; justify-content: center; flex-wrap: wrap;
+    backdrop-filter: blur(8px);
+  }
+  nav button {
+    background: none; border: none; color: rgba(255,255,255,0.65);
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 28px; cursor: pointer; transition: all 0.25s;
+    border-bottom: 3px solid transparent;
+  }
+  nav button:hover { color: var(--white); background: rgba(0,56,168,0.2); }
+  nav button.active { color: var(--white); border-bottom: 3px solid var(--red); background: rgba(206,17,38,0.1); }
+
+  main { max-width: 1300px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; letter-spacing: 4px; margin-bottom: 0.3rem; }
+  .section-subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
+  .edit-hint { background: rgba(200,168,75,0.1); border: 1px dashed var(--gold); border-radius: 4px; padding: 0.8rem 1.2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 1px; margin-bottom: 1.5rem; }
+
+  .scores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .score-card { background: linear-gradient(135deg, rgba(0,56,168,0.15), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.4); border-left: 4px solid var(--blue); border-radius: 4px; padding: 1.2rem 1.4rem; transition: transform 0.2s; }
+  .score-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,56,168,0.3); }
+  .score-card.win { border-left-color: #22c55e; }
+  .score-card.loss { border-left-color: var(--red); }
+  .score-card.otl { border-left-color: var(--gold); }
+  .score-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.7rem; }
+  .score-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .score-result { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 2px; padding: 2px 10px; border-radius: 2px; }
+  .score-result.win { background: rgba(34,197,94,0.2); color: #22c55e; }
+  .score-result.loss { background: rgba(206,17,38,0.2); color: var(--red); }
+  .score-result.otl { background: rgba(200,168,75,0.2); color: var(--gold); }
+  .score-matchup { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .score-team { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); flex: 1; }
+  .score-numbers { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; letter-spacing: 2px; text-align: center; line-height: 1; }
+  .score-vs { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.35); text-align: center; }
+
+  .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+  @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } nav button { padding: 12px 16px; font-size: 0.8rem; } .header-title h1 { font-size: 1.8rem; } .header-badge { display: none; } }
+  .news-card { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; overflow: hidden; transition: transform 0.2s; }
+  .news-card:hover { transform: translateY(-2px); }
+  .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
+  .news-body { padding: 1.4rem; }
+  .news-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+  .news-headline { font-family: 'Barlow Condensed', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.3; }
+  .news-content { font-size: 0.9rem; color: var(--text); line-height: 1.7; }
+  .news-date { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 1rem; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
+
+  .trade-entry { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.4rem; margin-bottom: 1rem; display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; }
+  .trade-side h4 { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .trade-side.received h4 { color: #22c55e; }
+  .trade-side.sent h4 { color: var(--red); }
+  .trade-side p { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05rem; font-weight: 600; line-height: 1.5; }
+  .trade-arrow { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); text-align: center; }
+  .trade-footer { grid-column: 1/-1; border-top: 1px solid rgba(0,56,168,0.2); padding-top: 0.7rem; font-size: 0.8rem; color: rgba(255,255,255,0.4); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
+
+  .roster-table-wrap { overflow-x: auto; margin-top: 1rem; }
+  table { width: 100%; border-collapse: collapse; font-family: 'Barlow Condensed', sans-serif; }
+  thead tr { background: linear-gradient(90deg, var(--blue), rgba(0,56,168,0.6)); }
+  thead th { padding: 12px 14px; text-align: center; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.8); font-weight: 600; white-space: nowrap; }
+  thead th:first-child { text-align: left; }
+  tbody tr { border-bottom: 1px solid rgba(0,56,168,0.15); transition: background 0.15s; }
+  tbody tr:hover { background: rgba(0,56,168,0.15); }
+  tbody td { padding: 12px 14px; text-align: center; font-size: 0.95rem; color: var(--text); }
+  tbody td:first-child { text-align: left; font-weight: 600; color: var(--white); }
+  .player-name-cell { display: flex; align-items: center; gap: 0.7rem; }
+  .player-role { font-size: 0.6rem; letter-spacing: 1px; padding: 2px 6px; border-radius: 2px; font-weight: 700; text-transform: uppercase; }
+  .role-c { background: rgba(200,168,75,0.25); color: var(--gold); border: 1px solid var(--gold); }
+  .role-a { background: rgba(0,56,168,0.3); color: #6fa3ff; border: 1px solid #4d7fd4; }
+  .role-gk { background: rgba(206,17,38,0.25); color: #ff7a8a; border: 1px solid var(--red); }
+  .stat-pos { color: #22c55e; }
+  .stat-neg { color: var(--red); }
+
+  .lineup-section { margin-bottom: 2.5rem; }
+  .lineup-section h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 3px; color: #6fa3ff; border-left: 4px solid var(--red); padding-left: 12px; margin-bottom: 1rem; }
+  .line-row { display: flex; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; align-items: center; }
+  .line-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); width: 60px; flex-shrink: 0; }
+  .line-player { background: linear-gradient(135deg, rgba(0,56,168,0.2), rgba(5,9,26,0.8)); border: 1px solid rgba(0,56,168,0.4); border-radius: 3px; padding: 10px 18px; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 600; min-width: 150px; text-align: center; flex: 1; transition: border-color 0.2s; }
+  .line-player:hover { border-color: var(--blue); }
+  .line-player small { display: block; font-size: 0.65rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-top: 2px; }
+
+  .record-banner { background: linear-gradient(90deg, rgba(0,56,168,0.25), rgba(206,17,38,0.15)); border: 1px solid rgba(0,56,168,0.4); border-radius: 4px; padding: 1.2rem 2rem; display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 2rem; }
+  .record-stat { text-align: center; }
+  .record-stat .num { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; line-height: 1; }
+  .record-stat .lbl { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 3px; color: rgba(255,255,255,0.45); text-transform: uppercase; }
+  .record-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
+
+  .hero { text-align: center; padding: 3rem 1rem 2rem; }
+  .hero-logo { width: 120px; height: 120px; margin: 0 auto 1.5rem; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { filter: drop-shadow(0 0 20px rgba(0,56,168,0.6)); } 50% { filter: drop-shadow(0 0 40px rgba(0,56,168,1)) drop-shadow(0 0 60px rgba(206,17,38,0.4)); } }
+  .hero h2 { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 6px; text-shadow: 0 0 40px rgba(0,56,168,0.8); margin-bottom: 0.5rem; }
+  .hero p { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 5px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
+  .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-top: 2rem; }
+  .home-quick { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.5rem; cursor: pointer; transition: all 0.2s; }
+  .home-quick:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,56,168,0.3); }
+  .home-quick .icon { font-size: 2rem; margin-bottom: 0.7rem; }
+  .home-quick h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 0.4rem; }
+  .home-quick p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+
+  .card { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; padding: 1.5rem; }
+  footer { border-top: 1px solid rgba(0,56,168,0.3); padding: 1.5rem 2rem; text-align: center; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: rgba(255,255,255,0.25); text-transform: uppercase; margin-top: 3rem; }
+  .empty-msg { color: rgba(255,255,255,0.4); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2px; padding: 2rem 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo"></div>
+  <div class="header-title">
+    <h1>New York Rangers</h1>
+    <p>HNL · Season 45</p>
+  </div>
+  <div class="header-badge">EST. HNL S45</div>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('home')">Home</button>
+  <button onclick="showTab('scores')">Scores</button>
+  <button onclick="showTab('roster')">Roster</button>
+  <button onclick="showTab('lineup')">Lineups &amp; Stats</button>
+  <button onclick="showTab('trades')">Trades</button>
+  <button onclick="showTab('news')">News</button>
+</nav>
+
+<main>
+
+  <div id="tab-home" class="tab-content active">
+    <div class="hero">
+      <div class="hero-logo"></div>
+      <h2>Broadway Blueshirts</h2>
+      <p>Hockey Night League · Season 45</p>
+    </div>
+    <div class="record-banner">
+      <div class="record-stat"><div class="num" id="rec-w">0</div><div class="lbl">Wins</div></div>
+      <div class="record-divider"></div>
+      <div class="record-stat"><div class="num" id="rec-l">0</div><div class="lbl">Losses</div></div>
+      <div class="record-divider"></div>
+      <div class="record-stat"><div class="num" id="rec-otl">0</div><div class="lbl">OTL</div></div>
+      <div class="record-divider"></div>
+      <div class="record-stat"><div class="num" id="rec-pts">0</div><div class="lbl">Points</div></div>
+      <div class="record-divider"></div>
+      <div class="record-stat"><div class="num" id="rec-gf">0</div><div class="lbl">GF</div></div>
+      <div class="record-divider"></div>
+      <div class="record-stat"><div class="num" id="rec-ga">0</div><div class="lbl">GA</div></div>
+    </div>
+    <div class="home-grid">
+      <div class="home-quick" onclick="showTab('scores')"><div class="icon">🏒</div><h3>Scores</h3><p>Latest game results</p></div>
+      <div class="home-quick" onclick="showTab('roster')"><div class="icon">👥</div><h3>Roster</h3><p>Full team roster with stats</p></div>
+      <div class="home-quick" onclick="showTab('lineup')"><div class="icon">📊</div><h3>Stats</h3><p>Starting lineups & season stats</p></div>
+      <div class="home-quick" onclick="showTab('trades')"><div class="icon">🔄</div><h3>Trades</h3><p>Transaction history</p></div>
+      <div class="home-quick" onclick="showTab('news')"><div class="icon">📰</div><h3>News</h3><p>Latest team updates</p></div>
+    </div>
+  </div>
+
+  <div id="tab-scores" class="tab-content">
+    <div class="section-title">Game Results</div>
+    <div class="section-subtitle">HNL Season 45 · All Games</div>
+    <div class="edit-hint">📝 To add a game: scroll to the bottom of this page's source, find the <strong>SCORES</strong> array in the &lt;script&gt; tag, and add a new entry.</div>
+    <div id="scores-container" class="scores-grid"></div>
+  </div>
+
+  <div id="tab-roster" class="tab-content">
+    <div class="section-title">Team Roster</div>
+    <div class="section-subtitle">HNL Season 45 · New York Rangers</div>
+    <div class="edit-hint">📝 To edit stats: find the <strong>ROSTER</strong> section in the &lt;script&gt; tag at the bottom of this file.</div>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:1.5rem 0 0.5rem;">⛸ Skaters</h3>
+    <div class="roster-table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Player</th><th>GP</th><th>CAP</th><th>TOI</th><th>SHOTS</th><th>G</th><th>A</th><th>P</th><th>+/-</th><th>HITS</th><th>PKS</th><th>BLK</th></tr></thead>
+        <tbody id="skaters-body"></tbody>
+      </table>
+    </div>
+    <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin:2rem 0 0.5rem;">🥅 Goalies</h3>
+    <div class="roster-table-wrap">
+      <table>
+        <thead><tr><th style="text-align:left">Player</th><th>GP</th><th>TOI</th><th>Saves</th><th>SA</th><th>GA</th><th>GAA</th><th>SV%</th><th>SO</th></tr></thead>
+        <tbody id="goalies-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tab-lineup" class="tab-content">
+    <div class="section-title">Lineups &amp; Stats</div>
+    <div class="section-subtitle">HNL Season 45 · Starting Lines</div>
+    <div class="edit-hint">📝 To edit lines: find the <strong>LINEUPS</strong> section in the &lt;script&gt; tag at the bottom of this file.</div>
+    <div id="lineup-container"></div>
+    <div class="section-title" style="margin-top:2.5rem">Season Stats</div>
+    <div class="section-subtitle">All Skaters</div>
+    <div class="roster-table-wrap" style="margin-top:1rem">
+      <table>
+        <thead><tr><th style="text-align:left">Player</th><th>G</th><th>A</th><th>P</th><th>+/-</th><th>HITS</th><th>PKS</th><th>BLK</th></tr></thead>
+        <tbody id="lineup-stats-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tab-trades" class="tab-content">
+    <div class="section-title">Transactions</div>
+    <div class="section-subtitle">HNL Season 45 · Trade History</div>
+    <div class="edit-hint">📝 To add a trade: find the <strong>TRADES</strong> array in the &lt;script&gt; tag at the bottom of this file.</div>
+    <div id="trades-container"></div>
+  </div>
+
+  <div id="tab-news" class="tab-content">
+    <div class="section-title">Latest News</div>
+    <div class="section-subtitle">HNL Season 45 · Broadway Updates</div>
+    <div class="edit-hint">📝 To post news: find the <strong>NEWS</strong> array in the &lt;script&gt; tag at the bottom of this file. Add new posts at the TOP of the list.</div>
+    <div class="news-grid" id="news-container"></div>
+  </div>
+
+</main>
+
+<footer>HNL Season 45 &nbsp;·&nbsp; New York Rangers &nbsp;·&nbsp; Broadway Blueshirts</footer>
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║         EDIT EVERYTHING IN THIS SECTION TO UPDATE SITE      ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+// ─────────────────────────────────────────────────────────────
+// SCORES  –  result: "W" = Win | "L" = Loss | "OTL" = OT Loss
+// ─────────────────────────────────────────────────────────────
+const SCORES = [
+  // Paste your games here. Example:
+  // { date: "Apr 6", opponent: "Carolina Hurricanes", nyrScore: 5, oppScore: 2, result: "W", type: "Regular", notes: "" },
+  // { date: "Apr 7", opponent: "Boston Bruins", nyrScore: 1, oppScore: 3, result: "L", type: "Regular", notes: "" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// ROSTER  –  role: "C" = Captain | "A" = Alternate | "" = none
+// ─────────────────────────────────────────────────────────────
+const ROSTER = {
+  skaters: [
+    { name: "Dupuisov",        role: "C",  gp:7,  cap:0,  toi:60, shots:37, g:15, a:2,  p:17, pm:18,  hits:20, pks:6,  blk:8  },
+    { name: "jgcars1",         role: "A",  gp:4,  cap:7,  toi:24, shots:4,  g:0,  a:2,  p:2,  pm:-1,  hits:22, pks:4,  blk:18 },
+    { name: "305tobbydog",     role: "A",  gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
+    { name: "afantastos",      role: "",   gp:10, cap:4,  toi:73, shots:13, g:2,  a:6,  p:8,  pm:1,   hits:40, pks:6,  blk:23 },
+    { name: "ydk_me34",        role: "",   gp:9,  cap:1,  toi:44, shots:7,  g:1,  a:4,  p:5,  pm:11,  hits:16, pks:1,  blk:12 },
+    { name: "Weatherplzza",    role: "",   gp:1,  cap:1,  toi:3,  shots:1,  g:0,  a:0,  p:0,  pm:1,   hits:3,  pks:0,  blk:0  },
+    { name: "ryanrulezzz",     role: "",   gp:5,  cap:1,  toi:21, shots:18, g:5,  a:1,  p:6,  pm:8,   hits:13, pks:4,  blk:1  },
+    { name: "cooljoe2443",     role: "",   gp:1,  cap:0,  toi:6,  shots:2,  g:0,  a:0,  p:0,  pm:-1,  hits:4,  pks:0,  blk:1  },
+    { name: "tsall100",        role: "",   gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
+    { name: "Elite6321",       role: "",   gp:3,  cap:0,  toi:8,  shots:0,  g:0,  a:0,  p:0,  pm:-1,  hits:1,  pks:0,  blk:0  },
+    { name: "ceab7712",        role: "",   gp:1,  cap:0,  toi:1,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
+    { name: "aramdaboss",      role: "",   gp:5,  cap:0,  toi:29, shots:13, g:3,  a:1,  p:4,  pm:-1,  hits:17, pks:2,  blk:8  },
+    { name: "greenly0728",     role: "",   gp:0,  cap:0,  toi:0,  shots:0,  g:0,  a:0,  p:0,  pm:0,   hits:0,  pks:0,  blk:0  },
+    { name: "w45rtert4r",      role: "",   gp:10, cap:0,  toi:48, shots:14, g:4,  a:0,  p:4,  pm:0,   hits:21, pks:7,  blk:10 },
+    { name: "HockeyNFootball", role: "",   gp:5,  cap:0,  toi:20, shots:14, g:2,  a:2,  p:4,  pm:4,   hits:14, pks:1,  blk:5  },
+  ],
+  goalies: [
+    { name: "305tobbydog", role: "GK1", gp:3, toi:32, saves:40, sa:43, ga:3,  gaa:"1.41", svp:".930", so:0 },
+    { name: "Weatherplzza",role: "GK2", gp:2, toi:30, saves:24, sa:27, ga:3,  gaa:"1.50", svp:".889", so:0 },
+    { name: "ryanrulezzz", role: "GK2", gp:3, toi:40, saves:50, sa:60, ga:10, gaa:"3.75", svp:".833", so:0 },
+    { name: "tsall100",    role: "GK2", gp:3, toi:31, saves:29, sa:36, ga:7,  gaa:"3.39", svp:".806", so:0 },
+  ]
+};
+
+// ─────────────────────────────────────────────────────────────
+// LINEUPS  –  Edit your starting lines here
+// ─────────────────────────────────────────────────────────────
+const LINEUPS = [
+  {
+    name: "Forward Lines",
+    lines: [
+      { label: "Line 1", players: [{ name:"Dupuisov", pos:"LW" }, { name:"aramdaboss", pos:"C" }, { name:"ryanrulezzz", pos:"RW" }] },
+      { label: "Line 2", players: [{ name:"afantastos", pos:"LW" }, { name:"w45rtert4r", pos:"C" }, { name:"HockeyNFootball", pos:"RW" }] },
+      { label: "Line 3", players: [{ name:"ydk_me34", pos:"LW" }, { name:"Elite6321", pos:"C" }, { name:"cooljoe2443", pos:"RW" }] },
+    ]
+  },
+  {
+    name: "Defense Pairs",
+    lines: [
+      { label: "Pair 1", players: [{ name:"jgcars1", pos:"LD" }, { name:"ceab7712", pos:"RD" }] },
+      { label: "Pair 2", players: [{ name:"Weatherplzza", pos:"LD" }, { name:"tsall100", pos:"RD" }] },
+    ]
+  },
+  {
+    name: "Goaltending",
+    lines: [
+      { label: "Starter", players: [{ name:"305tobbydog", pos:"GK" }] },
+      { label: "Backup",  players: [{ name:"ryanrulezzz", pos:"GK" }] },
+    ]
+  }
+];
+
+// ─────────────────────────────────────────────────────────────
+// TRADES  –  received = NYR got | sent = NYR gave away
+// ─────────────────────────────────────────────────────────────
+const TRADES = [
+  { date:"S45 Pre-Season", with:"Carolina Hurricanes", received:["305tobbydog (GK)"], sent:["—"], notes:"305tobbydog joins as Alternate Captain & GK1" },
+  { date:"S45", with:"Various Teams", received:["—"], sent:["22janjar","Sixsevenalss_Altt","OpGamerTY20"], notes:"Roster cleanup" },
+];
+
+// ─────────────────────────────────────────────────────────────
+// NEWS  –  First entry = Featured. Add NEW posts at the TOP.
+// tag: "📰 Update" | "🏒 Game" | "🔄 Trade" | "🏆 Milestone" | "📋 Roster"
+// ─────────────────────────────────────────────────────────────
+const NEWS = [
+  {
+    date: "April 5, 2026",
+    author: "NYR Front Office",
+    tag: "📋 Roster",
+    headline: "Season 45 Roster Finalized — Rangers Ready for Battle",
+    content: "The New York Rangers have locked in their HNL Season 45 roster. 305tobbydog takes over as GK1 and Alternate Captain alongside jgcars1, while captain Dupuisov leads the charge up front. afantastos, w45rtert4r, and ryanrulezzz provide offensive depth. 22janjar, Sixsevenalss_Altt, and OpGamerTY20 have been dealt in a roster overhaul. Let's go Rangers!"
+  },
+];
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║              DO NOT EDIT BELOW THIS LINE                    ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  const idx = ['home','scores','roster','lineup','trades','news'].indexOf(id);
+  if (idx >= 0) document.querySelectorAll('nav button')[idx].classList.add('active');
+}
+
+function pm(val) {
+  if (val > 0) return `<td class="stat-pos">+${val}</td>`;
+  if (val < 0) return `<td class="stat-neg">${val}</td>`;
+  return `<td>${val}</td>`;
+}
+function roleTag(r) {
+  if (r==='C') return '<span class="player-role role-c">C</span>';
+  if (r==='A') return '<span class="player-role role-a">A</span>';
+  if (r==='GK1') return '<span class="player-role role-gk">GK1</span>';
+  if (r==='GK2') return '<span class="player-role role-gk">GK2</span>';
+  return '';
+}
+
+function renderScores() {
+  if (!SCORES.length) return;
+  let w=0,l=0,otl=0,gf=0,ga=0;
+  SCORES.forEach(g => {
+    if (g.result==='W') w++; else if (g.result==='L') l++; else otl++;
+    gf += g.nyrScore; ga += g.oppScore;
+  });
+  document.getElementById('rec-w').textContent = w;
+  document.getElementById('rec-l').textContent = l;
+  document.getElementById('rec-otl').textContent = otl;
+  document.getElementById('rec-pts').textContent = w*2+otl;
+  document.getElementById('rec-gf').textContent = gf;
+  document.getElementById('rec-ga').textContent = ga;
+
+  document.getElementById('scores-container').innerHTML = SCORES.map(g => {
+    const r = g.result.toLowerCase();
+    const lbl = g.result==='W'?'WIN':g.result==='L'?'LOSS':'OTL';
+    return `<div class="score-card ${r}">
+      <div class="score-meta"><span class="score-label">${g.date} · ${g.type||'Regular'}</span><span class="score-result ${r}">${lbl}</span></div>
+      <div class="score-matchup">
+        <div class="score-team">NY Rangers</div>
+        <div><div class="score-numbers">${g.nyrScore} – ${g.oppScore}</div><div class="score-vs">vs</div></div>
+        <div class="score-team" style="text-align:right">${g.opponent}</div>
+      </div>
+      ${g.notes?`<div style="margin-top:.8rem;font-size:.8rem;color:rgba(255,255,255,.4);font-family:'Barlow Condensed',sans-serif">${g.notes}</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderRoster() {
+  document.getElementById('skaters-body').innerHTML = ROSTER.skaters.map(p =>
+    `<tr><td><div class="player-name-cell">${roleTag(p.role)} ${p.name}</div></td>
+    <td>${p.gp}</td><td>${p.cap}</td><td>${p.toi}</td><td>${p.shots}</td>
+    <td>${p.g}</td><td>${p.a}</td><td>${p.p}</td>${pm(p.pm)}
+    <td>${p.hits}</td><td>${p.pks}</td><td>${p.blk}</td></tr>`
+  ).join('');
+  document.getElementById('goalies-body').innerHTML = ROSTER.goalies.map(p =>
+    `<tr><td><div class="player-name-cell">${roleTag(p.role)} ${p.name}</div></td>
+    <td>${p.gp}</td><td>${p.toi}</td><td>${p.saves}</td><td>${p.sa}</td>
+    <td>${p.ga}</td><td>${p.gaa}</td><td>${p.svp}</td><td>${p.so}</td></tr>`
+  ).join('');
+}
+
+function renderLineup() {
+  document.getElementById('lineup-container').innerHTML = LINEUPS.map(s =>
+    `<div class="lineup-section"><h3>${s.name}</h3>
+    ${s.lines.map(row =>
+      `<div class="line-row"><div class="line-label">${row.label}</div>
+      ${row.players.map(pl => `<div class="line-player">${pl.name}<small>${pl.pos}</small></div>`).join('')}
+      </div>`
+    ).join('')}</div>`
+  ).join('');
+  document.getElementById('lineup-stats-body').innerHTML = ROSTER.skaters.map(p =>
+    `<tr><td>${p.name}</td><td>${p.g}</td><td>${p.a}</td><td>${p.p}</td>${pm(p.pm)}<td>${p.hits}</td><td>${p.pks}</td><td>${p.blk}</td></tr>`
+  ).join('');
+}
+
+function renderTrades() {
+  const con = document.getElementById('trades-container');
+  if (!TRADES.length) { con.innerHTML = '<p class="empty-msg">No trades this season.</p>'; return; }
+  con.innerHTML = TRADES.map(t =>
+    `<div class="trade-entry">
+      <div class="trade-side received"><h4>NYR Received</h4><p>${t.received.join('<br>')}</p></div>
+      <div class="trade-arrow">⇄</div>
+      <div class="trade-side sent"><h4>NYR Sent</h4><p>${t.sent.join('<br>')}</p></div>
+      <div class="trade-footer">📅 ${t.date} · With: ${t.with}${t.notes?' · '+t.notes:''}</div>
+    </div>`
+  ).join('');
+}
+
+function renderNews() {
+  const con = document.getElementById('news-container');
+  if (!NEWS.length) { con.innerHTML = '<p class="empty-msg">No news posted yet.</p>'; return; }
+  const main = NEWS[0], rest = NEWS.slice(1);
+  con.innerHTML = `
+    <div>
+      <div class="news-card"><div class="news-banner"></div><div class="news-body">
+        <div class="news-tag">📌 Featured</div>
+        <div class="news-headline">${main.headline}</div>
+        <div class="news-content">${main.content}</div>
+        <div class="news-date">${main.date} · by ${main.author}</div>
+      </div></div>
+      ${rest.map(n=>`<div class="news-card" style="margin-top:1rem"><div class="news-banner"></div><div class="news-body">
+        <div class="news-tag">${n.tag||'📰 Update'}</div>
+        <div class="news-headline">${n.headline}</div>
+        <div class="news-content">${n.content}</div>
+        <div class="news-date">${n.date} · by ${n.author}</div>
+      </div></div>`).join('')}
+    </div>
+    <div>
+      <div class="card">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:3px;margin-bottom:1rem;color:#6fa3ff">All Posts</div>
+        ${NEWS.map(n=>`<div style="border-bottom:1px solid rgba(0,56,168,0.2);padding:.7rem 0;font-family:'Barlow Condensed',sans-serif">
+          <div style="font-size:.65rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">${n.date}</div>
+          <div style="font-size:.95rem">${n.headline}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
+
+renderScores();
+renderRoster();
+renderLineup();
+renderTrades();
+renderNews();
+</script>
+</body>
+</html>
