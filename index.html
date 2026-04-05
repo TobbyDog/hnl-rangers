@@ -221,12 +221,11 @@
   .news-card:hover { transform: translateY(-2px); }
   .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
  .news-image {
-  width: 100%;
+   display: block;
+  width: auto;
+  max-width: 100%;
   height: auto;
-  max-height: none;
-  object-fit: contain;
-  object-position: center;
-  display: block;
+  margin: 0 auto;
   background: rgba(5,9,26,0.95);
   border-bottom: 1px solid rgba(0,56,168,0.25);
 }
