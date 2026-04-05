@@ -290,15 +290,16 @@
 // SCORES  –  result: "W" = Win | "L" = Loss | "OTL" = OT Loss
 // ─────────────────────────────────────────────────────────────
 const SCORES = [
-  { date: "Apr 1", opponent: "Carolina Hurricanes", nyrScore: 5, oppScore: 2, result: "W", type: "Regular", notes: "" },
-  { date: "Apr 2", opponent: "Boston Bruins", nyrScore: 4, oppScore: 1, result: "W", type: "Regular", notes: "" },
-  { date: "Apr 3", opponent: "Toronto Maple Leafs", nyrScore: 3, oppScore: 2, result: "W", type: "Regular", notes: "" },
-  { date: "Apr 4", opponent: "Tampa Bay Lightning", nyrScore: 6, oppScore: 3, result: "W", type: "Regular", notes: "" },
-  { date: "Apr 5", opponent: "New Jersey Devils", nyrScore: 2, oppScore: 3, result: "L", type: "Regular", notes: "" },
-  { date: "Apr 6", opponent: "Pittsburgh Penguins", nyrScore: 3, oppScore: 4, result: "L", type: "Regular", notes: "" },
-  { date: "Apr 7", opponent: "Washington Capitals", nyrScore: 4, oppScore: 5, result: "L", type: "Regular", notes: "" },
-  { date: "Apr 8", opponent: "Philadelphia Flyers", nyrScore: 2, oppScore: 3, result: "L", type: "Regular", notes: "" },
-  { date: "Apr 9", opponent: "New York Islanders", nyrScore: 3, oppScore: 5, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 1, 2026", opponent: "Ottawa Senators",      nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 1, 2026", opponent: "Nashville Predators",  nyrScore: 0, oppScore: 5, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 2, 2026", opponent: "Edmonton Oilers",      nyrScore: 4, oppScore: 5, result: "L", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 2, 2026", opponent: "Los Angeles Kings",    nyrScore: 2, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 3, 2026", opponent: "Carolina Hurricanes",  nyrScore: 5, oppScore: 1, result: "W", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 3, 2026", opponent: "Edmonton Oilers",      nyrScore: 0, oppScore: 3, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Washington Capitals",  nyrScore: 11, oppScore: 2, result: "W", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Montreal Canadiens",   nyrScore: 1, oppScore: 2, result: "L", type: "Regular", location: "Road", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Washington Capitals",  nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
+  { date: "Apr 4, 2026", opponent: "Pittsburgh Penguins",  nyrScore: 4, oppScore: 1, result: "W", type: "Regular", location: "Home", notes: "" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -439,7 +440,7 @@ function renderScores() {
 
     return `<div class="score-card ${r}">
       <div class="score-meta">
-        <span class="score-label">${g.date} · ${g.type || 'Regular'}</span>
+        <span class="score-label">${g.date} · ${g.type || 'Regular'} · ${g.location || '—'}</span>
         <span class="score-result ${r}">${lbl}</span>
       </div>
       <div class="score-matchup">
