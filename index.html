@@ -95,7 +95,14 @@
   .score-vs { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.35); text-align: center; }
 
   .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-  @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } nav button { padding: 12px 16px; font-size: 0.8rem; } .header-title h1 { font-size: 1.8rem; } .header-badge { display: none; } }
+  @media (max-width: 768px) {
+    .news-grid { grid-template-columns: 1fr; }
+    nav button { padding: 12px 16px; font-size: 0.8rem; }
+    .header-title h1 { font-size: 1.8rem; }
+    .header-badge { display: none; }
+    .record-banner { gap: 1rem; justify-content: center; }
+    .record-divider { display: none; }
+  }
   .news-card { background: linear-gradient(135deg, rgba(10,18,48,0.9), rgba(5,9,26,0.95)); border: 1px solid rgba(0,56,168,0.35); border-radius: 4px; overflow: hidden; transition: transform 0.2s; }
   .news-card:hover { transform: translateY(-2px); }
   .news-banner { height: 6px; background: linear-gradient(90deg, var(--blue), var(--red)); }
@@ -146,7 +153,10 @@
 
   .hero { text-align: center; padding: 3rem 1rem 2rem; }
   .hero-logo { width: 120px; height: 120px; margin: 0 auto 1.5rem; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/New_York_Rangers.svg/200px-New_York_Rangers.svg.png') center/contain no-repeat; animation: pulse 3s ease-in-out infinite; }
-  @keyframes pulse { 0%,100% { filter: drop-shadow(0 0 20px rgba(0,56,168,0.6)); } 50% { filter: drop-shadow(0 0 40px rgba(0,56,168,1)) drop-shadow(0 0 60px rgba(206,17,38,0.4)); } }
+  @keyframes pulse {
+    0%,100% { filter: drop-shadow(0 0 20px rgba(0,56,168,0.6)); }
+    50% { filter: drop-shadow(0 0 40px rgba(0,56,168,1)) drop-shadow(0 0 60px rgba(206,17,38,0.4)); }
+  }
   .hero h2 { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 6px; text-shadow: 0 0 40px rgba(0,56,168,0.8); margin-bottom: 0.5rem; }
   .hero p { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 5px; color: var(--red); text-transform: uppercase; margin-bottom: 2rem; }
   .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-top: 2rem; }
@@ -280,9 +290,15 @@
 // SCORES  –  result: "W" = Win | "L" = Loss | "OTL" = OT Loss
 // ─────────────────────────────────────────────────────────────
 const SCORES = [
-  // Paste your games here. Example:
-  // { date: "Apr 6", opponent: "Carolina Hurricanes", nyrScore: 5, oppScore: 2, result: "W", type: "Regular", notes: "" },
-  // { date: "Apr 7", opponent: "Boston Bruins", nyrScore: 1, oppScore: 3, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 1", opponent: "Carolina Hurricanes", nyrScore: 5, oppScore: 2, result: "W", type: "Regular", notes: "" },
+  { date: "Apr 2", opponent: "Boston Bruins", nyrScore: 4, oppScore: 1, result: "W", type: "Regular", notes: "" },
+  { date: "Apr 3", opponent: "Toronto Maple Leafs", nyrScore: 3, oppScore: 2, result: "W", type: "Regular", notes: "" },
+  { date: "Apr 4", opponent: "Tampa Bay Lightning", nyrScore: 6, oppScore: 3, result: "W", type: "Regular", notes: "" },
+  { date: "Apr 5", opponent: "New Jersey Devils", nyrScore: 2, oppScore: 3, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 6", opponent: "Pittsburgh Penguins", nyrScore: 3, oppScore: 4, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 7", opponent: "Washington Capitals", nyrScore: 4, oppScore: 5, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 8", opponent: "Philadelphia Flyers", nyrScore: 2, oppScore: 3, result: "L", type: "Regular", notes: "" },
+  { date: "Apr 9", opponent: "New York Islanders", nyrScore: 3, oppScore: 5, result: "L", type: "Regular", notes: "" },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -374,6 +390,7 @@ function showTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
   const idx = ['home','scores','roster','lineup','trades','news'].indexOf(id);
   if (idx >= 0) document.querySelectorAll('nav button')[idx].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function pm(val) {
@@ -381,39 +398,59 @@ function pm(val) {
   if (val < 0) return `<td class="stat-neg">${val}</td>`;
   return `<td>${val}</td>`;
 }
+
 function roleTag(r) {
-  if (r==='C') return '<span class="player-role role-c">C</span>';
-  if (r==='A') return '<span class="player-role role-a">A</span>';
-  if (r==='GK1') return '<span class="player-role role-gk">GK1</span>';
-  if (r==='GK2') return '<span class="player-role role-gk">GK2</span>';
+  if (r === 'C') return '<span class="player-role role-c">C</span>';
+  if (r === 'A') return '<span class="player-role role-a">A</span>';
+  if (r === 'GK1') return '<span class="player-role role-gk">GK1</span>';
+  if (r === 'GK2') return '<span class="player-role role-gk">GK2</span>';
   return '';
 }
 
 function renderScores() {
-  if (!SCORES.length) return;
-  let w=0,l=0,otl=0,gf=0,ga=0;
+  let w = 0, l = 0, otl = 0, gf = 0, ga = 0;
+
   SCORES.forEach(g => {
-    if (g.result==='W') w++; else if (g.result==='L') l++; else otl++;
-    gf += g.nyrScore; ga += g.oppScore;
+    if (g.result === 'W') w++;
+    else if (g.result === 'L') l++;
+    else if (g.result === 'OTL') otl++;
+
+    gf += g.nyrScore;
+    ga += g.oppScore;
   });
+
   document.getElementById('rec-w').textContent = w;
   document.getElementById('rec-l').textContent = l;
   document.getElementById('rec-otl').textContent = otl;
-  document.getElementById('rec-pts').textContent = w*2+otl;
+  document.getElementById('rec-pts').textContent = (w * 2) + otl;
   document.getElementById('rec-gf').textContent = gf;
   document.getElementById('rec-ga').textContent = ga;
 
-  document.getElementById('scores-container').innerHTML = SCORES.map(g => {
-    const r = g.result.toLowerCase();
-    const lbl = g.result==='W'?'WIN':g.result==='L'?'LOSS':'OTL';
+  const container = document.getElementById('scores-container');
+
+  if (!SCORES.length) {
+    container.innerHTML = '<p class="empty-msg">No games added yet.</p>';
+    return;
+  }
+
+  container.innerHTML = SCORES.map(g => {
+    const r = g.result === 'W' ? 'win' : g.result === 'L' ? 'loss' : 'otl';
+    const lbl = g.result === 'W' ? 'WIN' : g.result === 'L' ? 'LOSS' : 'OTL';
+
     return `<div class="score-card ${r}">
-      <div class="score-meta"><span class="score-label">${g.date} · ${g.type||'Regular'}</span><span class="score-result ${r}">${lbl}</span></div>
+      <div class="score-meta">
+        <span class="score-label">${g.date} · ${g.type || 'Regular'}</span>
+        <span class="score-result ${r}">${lbl}</span>
+      </div>
       <div class="score-matchup">
         <div class="score-team">NY Rangers</div>
-        <div><div class="score-numbers">${g.nyrScore} – ${g.oppScore}</div><div class="score-vs">vs</div></div>
+        <div>
+          <div class="score-numbers">${g.nyrScore} – ${g.oppScore}</div>
+          <div class="score-vs">vs</div>
+        </div>
         <div class="score-team" style="text-align:right">${g.opponent}</div>
       </div>
-      ${g.notes?`<div style="margin-top:.8rem;font-size:.8rem;color:rgba(255,255,255,.4);font-family:'Barlow Condensed',sans-serif">${g.notes}</div>`:''}
+      ${g.notes ? `<div style="margin-top:.8rem;font-size:.8rem;color:rgba(255,255,255,.4);font-family:'Barlow Condensed',sans-serif">${g.notes}</div>` : ''}
     </div>`;
   }).join('');
 }
@@ -425,6 +462,7 @@ function renderRoster() {
     <td>${p.g}</td><td>${p.a}</td><td>${p.p}</td>${pm(p.pm)}
     <td>${p.hits}</td><td>${p.pks}</td><td>${p.blk}</td></tr>`
   ).join('');
+
   document.getElementById('goalies-body').innerHTML = ROSTER.goalies.map(p =>
     `<tr><td><div class="player-name-cell">${roleTag(p.role)} ${p.name}</div></td>
     <td>${p.gp}</td><td>${p.toi}</td><td>${p.saves}</td><td>${p.sa}</td>
@@ -441,6 +479,7 @@ function renderLineup() {
       </div>`
     ).join('')}</div>`
   ).join('');
+
   document.getElementById('lineup-stats-body').innerHTML = ROSTER.skaters.map(p =>
     `<tr><td>${p.name}</td><td>${p.g}</td><td>${p.a}</td><td>${p.p}</td>${pm(p.pm)}<td>${p.hits}</td><td>${p.pks}</td><td>${p.blk}</td></tr>`
   ).join('');
@@ -448,21 +487,31 @@ function renderLineup() {
 
 function renderTrades() {
   const con = document.getElementById('trades-container');
-  if (!TRADES.length) { con.innerHTML = '<p class="empty-msg">No trades this season.</p>'; return; }
+  if (!TRADES.length) {
+    con.innerHTML = '<p class="empty-msg">No trades this season.</p>';
+    return;
+  }
+
   con.innerHTML = TRADES.map(t =>
     `<div class="trade-entry">
       <div class="trade-side received"><h4>NYR Received</h4><p>${t.received.join('<br>')}</p></div>
       <div class="trade-arrow">⇄</div>
       <div class="trade-side sent"><h4>NYR Sent</h4><p>${t.sent.join('<br>')}</p></div>
-      <div class="trade-footer">📅 ${t.date} · With: ${t.with}${t.notes?' · '+t.notes:''}</div>
+      <div class="trade-footer">📅 ${t.date} · With: ${t.with}${t.notes ? ' · ' + t.notes : ''}</div>
     </div>`
   ).join('');
 }
 
 function renderNews() {
   const con = document.getElementById('news-container');
-  if (!NEWS.length) { con.innerHTML = '<p class="empty-msg">No news posted yet.</p>'; return; }
-  const main = NEWS[0], rest = NEWS.slice(1);
+  if (!NEWS.length) {
+    con.innerHTML = '<p class="empty-msg">No news posted yet.</p>';
+    return;
+  }
+
+  const main = NEWS[0];
+  const rest = NEWS.slice(1);
+
   con.innerHTML = `
     <div>
       <div class="news-card"><div class="news-banner"></div><div class="news-body">
@@ -471,20 +520,24 @@ function renderNews() {
         <div class="news-content">${main.content}</div>
         <div class="news-date">${main.date} · by ${main.author}</div>
       </div></div>
-      ${rest.map(n=>`<div class="news-card" style="margin-top:1rem"><div class="news-banner"></div><div class="news-body">
-        <div class="news-tag">${n.tag||'📰 Update'}</div>
-        <div class="news-headline">${n.headline}</div>
-        <div class="news-content">${n.content}</div>
-        <div class="news-date">${n.date} · by ${n.author}</div>
-      </div></div>`).join('')}
+      ${rest.map(n => `
+        <div class="news-card" style="margin-top:1rem"><div class="news-banner"></div><div class="news-body">
+          <div class="news-tag">${n.tag || '📰 Update'}</div>
+          <div class="news-headline">${n.headline}</div>
+          <div class="news-content">${n.content}</div>
+          <div class="news-date">${n.date} · by ${n.author}</div>
+        </div></div>
+      `).join('')}
     </div>
     <div>
       <div class="card">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:3px;margin-bottom:1rem;color:#6fa3ff">All Posts</div>
-        ${NEWS.map(n=>`<div style="border-bottom:1px solid rgba(0,56,168,0.2);padding:.7rem 0;font-family:'Barlow Condensed',sans-serif">
-          <div style="font-size:.65rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">${n.date}</div>
-          <div style="font-size:.95rem">${n.headline}</div>
-        </div>`).join('')}
+        ${NEWS.map(n => `
+          <div style="border-bottom:1px solid rgba(0,56,168,0.2);padding:.7rem 0;font-family:'Barlow Condensed',sans-serif">
+            <div style="font-size:.65rem;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px">${n.date}</div>
+            <div style="font-size:.95rem">${n.headline}</div>
+          </div>
+        `).join('')}
       </div>
     </div>`;
 }
